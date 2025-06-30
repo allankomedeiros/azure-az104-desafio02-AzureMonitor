@@ -9,5 +9,5 @@
 - Configurado ação para notificação por email
 
 #Arquivos trabalhados no bootcamp
--[Template ARM](./templates/arm.json)
--[Template Biceps](./templates/template.biceps)
+- [Template ARM](./templates/arm.json)
+- [Template Biceps](./templates/template.biceps)
