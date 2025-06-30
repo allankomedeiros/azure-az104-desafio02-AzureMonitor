@@ -1,0 +1,49 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "activitylogalerts_Deletevmoperacoes_name": {
+            "defaultValue": "Deletevmoperacoes",
+            "type": "String"
+        },
+        "actiongroups_alerta_para_o_grupo_de_operacoes_externalid": {
+            "defaultValue": "/subscriptions/b5e7b15f-5aab-4202-a088-08d7a6932269/resourceGroups/az104_desafio01/providers/microsoft.insights/actiongroups/alerta para o grupo de operacoes",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "microsoft.insights/activitylogalerts",
+            "apiVersion": "2023-01-01-preview",
+            "name": "[parameters('activitylogalerts_Deletevmoperacoes_name')]",
+            "location": "global",
+            "properties": {
+                "scopes": [
+                    "/subscriptions/b5e7b15f-5aab-4202-a088-08d7a6932269/resourcegroups/AZ104_desafio01"
+                ],
+                "condition": {
+                    "allOf": [
+                        {
+                            "field": "category",
+                            "equals": "Administrative"
+                        },
+                        {
+                            "field": "operationName",
+                            "equals": "Microsoft.DevTestLab/labs/virtualMachines/delete"
+                        }
+                    ]
+                },
+                "actions": {
+                    "actionGroups": [
+                        {
+                            "actionGroupId": "[parameters('actiongroups_alerta_para_o_grupo_de_operacoes_externalid')]",
+                            "webhookProperties": {}
+                        }
+                    ]
+                },
+                "enabled": true
+            }
+        }
+    ]
+}
