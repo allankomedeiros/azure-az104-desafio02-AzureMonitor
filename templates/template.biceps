@@ -1,0 +1,33 @@
+param activitylogalerts_Deletevmoperacoes_name string = 'Deletevmoperacoes'
+param actiongroups_alerta_para_o_grupo_de_operacoes_externalid string = '/subscriptions/b5e7b15f-5aab-4202-a088-08d7a6932269/resourceGroups/az104_desafio01/providers/microsoft.insights/actiongroups/alerta para o grupo de operacoes'
+
+resource activitylogalerts_Deletevmoperacoes_name_resource 'microsoft.insights/activitylogalerts@2023-01-01-preview' = {
+  name: activitylogalerts_Deletevmoperacoes_name
+  location: 'global'
+  properties: {
+    scopes: [
+      '/subscriptions/b5e7b15f-5aab-4202-a088-08d7a6932269/resourcegroups/AZ104_desafio01'
+    ]
+    condition: {
+      allOf: [
+        {
+          field: 'category'
+          equals: 'Administrative'
+        }
+        {
+          field: 'operationName'
+          equals: 'Microsoft.DevTestLab/labs/virtualMachines/delete'
+        }
+      ]
+    }
+    actions: {
+      actionGroups: [
+        {
+          actionGroupId: actiongroups_alerta_para_o_grupo_de_operacoes_externalid
+          webhookProperties: {}
+        }
+      ]
+    }
+    enabled: true
+  }
+}
